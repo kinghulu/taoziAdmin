@@ -1,0 +1,23 @@
+{
+  "name": "taoziadmin",
+  "version": "1.0.0",
+  "description": "a admin by node.js",
+  "scripts": {
+    "serve": "nodemon ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/yaohuitao/taoziAdmin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^2.0.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
+}

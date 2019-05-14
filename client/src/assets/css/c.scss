@@ -1,0 +1,180 @@
+/* 改变主题色变量 */
+//$--color-primary: #f4c900;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
+form,fieldset,input,textarea,p,blockquote,th,td,label {
+    padding: 0;
+    margin: 0;-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+header, footer, nav, section, article, aside,figure{ display:block; margin:0; padding:0;}/*html5初始化*/
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset,img {
+    border: 0;
+}
+address,caption,cite,code,dfn,th,var {
+    font-weight: normal;
+    font-style: normal;
+
+}
+ol,ul {
+    list-style: none;
+}
+select, input, select, img, label{
+    vertical-align: middle;
+}
+body{ box-sizing: border-box; min-height: 100%;}
+.clearfix:before,
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix:after {clear: both;}
+.clearfix {zoom: 1;} /* IE < 8 */
+
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;font-size:14px;
+}
+
+label {
+  font-weight: 700;
+}
+
+$color1:#76bbff;
+$color2:#ff8f8f;
+$color3:#7fd837;
+$color4:#fd7bd2;
+$color5:#dfc800;
+$color6:#11dceb;
+$c_main:#f4c900;
+
+a{ text-decoration: none; color:#333;
+    &:hover{ text-decoration: underline; color:$color1 }
+}
+.t_grey{ color:#999;}
+.t_blue{ color:$color1}
+
+.titlebar{ display: flex; justify-content: space-between; align-content: center; align-items: center; padding:10px 0;
+    h1{ font-size:24px; font-weight: normal;
+        small{ font-size:16px; margin-left:10px; color:#999;}
+    }
+}
+
+.el-pagination{ text-align: center}
+a.el-button{ text-decoration: none;}
+.noData{ text-align: center; padding:20px; text-align: center; color:#999;}
+.course_select{ margin-top:15px;}
+.course_select .el-select{ margin-right:10px;}
+.pageTitle{ font-size:20px; font-weight: normal;}
+.course_box{ margin-top:15px;}
+.page_box{ padding:20px;}
+.pagetopBox{ display: flex; justify-content: space-between; padding-bottom:5px;}
+.container .breadcrumbs{  padding-bottom:20px; line-height: 30px; box-sizing: border-box;}
+.form_tips{ color:#999; line-height: 20px; padding-left:10px;}
+.formbox{ padding-top:30px}
+.currentfile{     padding:16px 16px 0; background-color: #ecf8ff; border-radius: 4px; border-left: 5px solid #50bfff; margin: 20px 0;}
+.currentfile .el-form-item:last-child{ margin-bottom: 0;}
+.disabled-select{ user-select: none}
+.formbtnbox{ padding:20px 0 20px; text-align: center; }
+
+.bigEleDialog{
+    .el-dialog{width:80%; max-width: 600px;}
+    .el-dialog__body{ padding:20px;}
+}
+.bigWidthDialog{
+    .el-dialog{width:90%; max-width: 1200px;}
+    .el-dialog__body{ padding:10px;}
+}
+.file_item{border-top:1px solid #ddd; padding-top:20px;}
+.file_item:first-child{ border-top:none; padding-top:0;}
+
+.upload_progress{
+    margin-top:4px;
+    .p_bar{ height: 4px;background:#f2f2f2; }
+    .p_v{background:$c_main; width: 10%; height: 4px;}
+    .p_txt{ text-align: right; font-size:12px; color:#666; line-height: 20px;}
+}
+.emptyBox{ padding:40px 20px; text-align: center; color:#ddd;}
+.lives_item{ display: flex; line-height: 40px; padding:6px 0; border-bottom:1px solid #eee;}
+.lives_item_name{ width:20%; max-width: 140px; text-align: right; padding-right:15px; color:#999}
+
+
+ /*fadeDown*/
+ .fadeDown-enter-active {
+    -webkit-animation:fadeInDown 0.3s 0s ease both;
+    animation:fadeInDown 0.3s 0s ease both;
+  }
+  .fadeDown-leave-active {
+   -webkit-animation:fadeOutDown 0.3s 0s ease both;
+   animation:fadeOutDown 0.3s 0s ease both;
+  }
+  @keyframes fadeInDown{
+   0%{opacity:0.4; transform:translateY(-20px)}
+   100%{opacity:1; transform:translateY(0)}
+  }
+  @keyframes fadeOutDown{
+   0%{opacity:1; transform:translateY(0)}
+   100%{opacity:0;transform:translateY(20px)}
+  }
+
+  .el-button.disabled{ opacity: 0.6;}
+
+  .ycourse{
+      margin-top:10px;
+      .ycourse_item{ display: flex; padding-top:1px;}
+      .ycourse_index{ position: relative; font-size:60px; font-weight: 100; font-style: italic; text-align: center; line-height: 100px; min-width:120px; width:16%; flex-grow:0; background:#e6e6e8; height:100px; font-family: Microsoft Yahei; color:#999}
+      .ycourse_index sub{ position: absolute; right:5px; top:2px; font-size:14px; font-style: normal; line-height: 20px; opacity: 0.5;}
+      .ycourse_moudle{ position: relative; width:28%; cursor: pointer; text-align: center; flex-grow: 1; box-sizing: border-box; text-align: center; height:100px; border-left:1px solid #fff;
+        h2{ font-weight: normal; size:20px; padding:20px 0 10px;}
+        &:hover{ opacity: 0.8;}
+      }
+      .ycourse_moudle_yx{background:rgba(62,150,251,0.15); color:#3e96fb}
+      .ycourse_moudle_kh{background:rgba(225,152,63,0.15); color:#e1983f}
+      .ycourse_moudle_fx{background:rgba(97,187,61,0.15); color:#3fa212}
+      .ycourse_moudle_yx.configed{background:rgba(62,150,251,1); color:#fff}
+      .ycourse_moudle_kh.configed{background:rgba(225,152,63,1); color:#fff}
+      .ycourse_moudle_fx.configed{background:rgba(97,187,61,1); color:#fff}
+      .ycourse_time{ opacity: 0.5;}
+  }
+
+  $video_h:180px;
+  $video_w:300px;
+  .ylives_box{ display: flex; flex-wrap: wrap; justify-content: space-between}
+.ylives_item{ background:#eee; margin-bottom:10px; position: relative; min-width: 500px; height:$video_h; padding-left:$video_w; box-sizing: border-box; width:49%;}
+.ylives_video{
+    width:$video_w; height:$video_h; overflow: hidden; background:#4e4e4e; position: absolute; left:0; top:0;
+    video{ width:$video_w; height:$video_h; }
+} 
+.ylives_main{ padding:10px 15px; position: relative;  height:$video_h; box-sizing: border-box;
+    h2{ font-size:20px; font-weight: normal; line-height: 30px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right:30px;}
+    .ylives_item_time{ font-size:12px; color:#999; line-height: 30px;}
+    .ylives_item_info{ display: flex; flex-wrap: wrap; color:#666; line-height:180%; padding-top:5px;}
+    .ylives_item_info_f{ width:50%;}
+}
+.ylives_item_btn{ position: absolute; right:10px; bottom:10px;}
+.ylives_item_del{ position: absolute; right:10px; top:10px; font-size:20px; color:#999; cursor: pointer; padding:4px; border:none; background:none;
+    &:hover{ color:#333;}
+    &.disabled{ opacity: 0.2;}
+}
+
+  
+@media screen and (max-width:1400px) {
+    .ylives_item{width:100%}
+}
+  
+@media screen and (max-width:764px) {
+    .footer{left:20px; position: static; padding:20px;}
+}

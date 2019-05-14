@@ -1,4 +1,4 @@
-# taoziAdmin
+# 后端
 
 #### 介绍
 基于Node.js、Express、MongoDB、Vue的后端管理系统。
@@ -13,7 +13,7 @@
 前端项目
 1. npm install
 ### 开发 
-2. gulp dev
+2. npm run serve
 
 
 #### 使用说明
