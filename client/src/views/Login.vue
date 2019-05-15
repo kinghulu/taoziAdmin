@@ -2,7 +2,7 @@
     <div class="loginBody">
         <div class="loginBox">
             <div class="loginlogo"><div class="logoimg"></div></div>
-            <div class="loginTitle">摩比-学习资源管理后台</div>
+            <div class="loginTitle">资源管理后台</div>
             <div class="loginForm">
                 <el-form ref="loginform" :model="logform" :rules="rules">
                     <el-form-item prop="uname">

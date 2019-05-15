@@ -2,7 +2,7 @@
     <div class="content">
         <canvas class="snow" id="snow"></canvas>
         <div class="main-text">
-            <h1>摩比学习资料系统<br/><small>The page has gone missing.</small></h1><router-link class="home-link" :to="{name:'Index'}">Home</router-link> <router-link class="home-link" :to="{name:'Login'}" style="margin-left:15px;">Login</router-link>
+            <h1>后台管理系统<br/><small>The page has gone missing.</small></h1><router-link class="home-link" :to="{name:'Index'}">Home</router-link> <router-link class="home-link" :to="{name:'Login'}" style="margin-left:15px;">Login</router-link>
         </div>
         <div class="ground">
             <div class="mound"> 
