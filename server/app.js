@@ -71,6 +71,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+app.get('/', (req, res) => res.send("helloword"));
 app.post('/index/time', (req, res) => res.json({time:new Date().getTime()}))
 
 // catch 404 and forward to error handler

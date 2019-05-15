@@ -1,6 +1,6 @@
 <template>
     <section class="footer">
-        Copyright© 摩比思维MOBBY STEM CENTER 北京学而思教育科技有限公司 版权所有
+        Copyright© Taozi 版权所有
     </section>
 </template>
 <script>

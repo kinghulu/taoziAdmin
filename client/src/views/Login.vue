@@ -27,7 +27,7 @@
                 </el-form>
             </div>
         </div>
-        <div class="copyright">Copyright© 摩比思维MOBBY STEM CENTER 北京学而思教育科技有限公司 版权所有</div>
+        <div class="copyright">Copyright© Taozi 版权所有</div>
     </div>
 </template>
 <script>
