@@ -34,7 +34,7 @@
     }
 </script>
 <style rel="stylesheet/scss"  type="text/scss" lang="scss">
-    .container{ padding:70px 0px 40px 220px; position: relative; box-sizing: border-box; min-height: 100vh;}
+    .container{ padding:60px 0px 40px 220px; position: relative; box-sizing: border-box; min-height: 100vh;}
     .mainBox{ position: relative; padding:20px;}
     
     @media screen and (max-width:764px){

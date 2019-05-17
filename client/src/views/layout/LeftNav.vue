@@ -85,7 +85,7 @@
 
 </script>
 <style scoped>
-    .adminleft{ position: fixed; left:0; top:70px; bottom:0; width:220px;z-index:22; overflow: hidden; overflow-y: auto;}
+    .adminleft{ position: fixed; left:0; top:60px; bottom:0; width:220px;z-index:22; overflow: hidden; overflow-y: auto;}
     .el-menu-admin{ padding-top: 0px;}
     @media screen and (max-width:764px){
         .el-menu-admin{ padding-top:0px;}
@@ -93,8 +93,7 @@
     }
 </style>
 <style rel="stylesheet/scss"  type="text/scss" lang="scss">
-    .adminleft-nav{ position: absolute; left:0; right:0; top:0; bottom:0; background:#3B3944;-webkit-transition: all .28s ease-out;
-        transition: all .28s ease-out;}
+    .adminleft-nav{ position: absolute; left:0; right:0; top:0; bottom:0; background:#3B3944;-webkit-transition: all .28s ease-out; transition: all .28s ease-out;}
     .adminleft-nav > .el-menu{background-color: #3B3944; border:none;}
     .adminleft-nav .el-submenu > .el-menu{background-color: #22212A; border:none;}
     .adminleft-nav .el-menu-item i{ color:#bfcbd9;}

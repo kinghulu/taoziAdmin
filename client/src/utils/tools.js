@@ -1,13 +1,14 @@
 import { resolve } from '_any-promise@1.3.0@any-promise';
 
-const KEY = "03b01ff2e4770c55371455fbad861dbc";
-const SECERT = "4956f881ac3bce9ff7e8e6ac9ecacd03";
+const KEY = "15a303177bc3fbd375fc2769c6d9bdc7";
+const SECERT = "15a303177bc3fbd375fc2769c6d9bdc7";
 var token = "";
 var timediff = 0; //服务器跟本机的时间差
 export default {
     install(Vue, options) {
         //数据每页条数
         Vue.prototype.page_size = 12;
+        Vue.prototype.SECERT = SECERT;
 
         //去除两端空格
         Vue.prototype.trim = function (s) {
@@ -23,7 +24,7 @@ export default {
             if(!token){
                 this.$ajax({
                     method: 'post',
-                    url:  '/index/time'
+                    url:  '/admin/time'
                 }).then( (res)=> {
                     let rd=res.data;
                     if(rd.code==200000){
@@ -76,9 +77,9 @@ export default {
             var curstamp = localstamp + timediff; 
             var strmd5 = KEY + "&" + SECERT + "&"+ curstamp;
             token = this.md5(strmd5); 
-            config.headers['KEY'] = KEY;
-            config.headers['stu-token'] = token;
-            config.headers['timestamp'] = curstamp;
+            //config.headers['KEY'] = KEY;
+            //config.headers['stu-token'] = token;
+            //config.headers['timestamp'] = curstamp;
         }
 
         /**

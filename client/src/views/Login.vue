@@ -2,7 +2,7 @@
     <div class="loginBody">
         <div class="loginBox">
             <div class="loginlogo"><div class="logoimg"></div></div>
-            <div class="loginTitle">资源管理后台</div>
+            <div class="loginTitle">管理后台</div>
             <div class="loginForm">
                 <el-form ref="loginform" :model="logform" :rules="rules">
                     <el-form-item prop="uname">
@@ -36,7 +36,8 @@
         data() {
             const checkValidCode = (rule, value, callback) => {
                 if (!value) {
-                    callback(new Error('请输入验证码'))
+                    //callback(new Error('请输入验证码'))
+                    callback()
                 } else if (value.toUpperCase() !== this.validCode.toUpperCase()) {
                     callback(new Error('验证码不正确'))
                 } else {
@@ -76,17 +77,22 @@
                         this.loginLoading = true;
                         this.$ajax({
                             method: 'post',
-                            url:  'resource/login/login',
+                            url:  '/admin/user/login',
                             data: this.qs.stringify({
-                                user_name:this.logform.uname,
-                                user_pwd:this.md5(this.logform.upass)
+                                name:this.logform.uname,
+                                pwd:this.md5(this.SECERT + this.logform.upass)
                             })
                         }).then( (res)=> {
                             this.loginLoading = false;
-                            this.$ajax.defaults.headers.common['Authorization'] = "Bearer " + res.login_token;
+                            console.log(res)
                             let userobj = res;
+
+                            this.$ajax.defaults.headers.common['Authorization'] = userobj.token;
+                            
+
                             //读取时判断是否一直
-                            userobj.localkey = this.md5(userobj.uid+userobj.auth+"studyfiles");
+                            userobj.localkey = this.md5(userobj.name+userobj.avatar+"taoziadmin");
+
                             this.$store.dispatch('LoginByName',userobj);
                             this.$router.replace("/");
                         }).catch( (res)=> {
@@ -112,14 +118,13 @@
             if (user) {
                 let u_obj = JSON.parse(user);
                 //判断是否被更改
-                let tmpkey =  this.md5(u_obj.uid+u_obj.auth+"studyfiles");
+                let tmpkey =  this.md5(u_obj.name+u_obj.avatar+"taoziadmin");
                 if(u_obj.localkey == tmpkey){
                     this.$router.replace("/");
                 }else{
                     this.$store.dispatch('LogoutUser');
                 }
             }
-            
         }
     }
     //
@@ -127,15 +132,16 @@
 <style lang="scss">
     .loginTitle{ padding:60px 10px 0; color:#fff;  border-radius: 10px 10px 0px 0px; font-size:24px; text-align: center;color:#333; text-align: center;}
     .loginTitle i{ font-size:10px; display: inline-block; margin-left: 10px; font-style: normal; background: #fff; color:#20a0ff; border-radius: 4px; padding:3px 5px;}
-    
-    .loginBody{ width:100%; height:100vh; background-size: cover; background-image: url(../assets/images/login_bg.jpg); background-position: center center; overflow: hidden; box-sizing: border-box; padding-bottom:30px;}
+    .loginBody{ width:100%; height:100vh; background-size: cover; background-image: -webkit-linear-gradient( 135deg, #008bfe 0%, #02c6ff 100%);
+  background-image: linear-gradient( 135deg, #008bfe 0%, #02c6ff 100%); background-position: center center; 
+ overflow: hidden; box-sizing: border-box; padding-bottom:30px;}
     .loginlogo{ width: 150px; height: 150px; position: absolute; left:50%; margin-left: -75px; background-size:cover; top:-75px;}
     .logoimg{  background-size:cover; width:100%; height: 100%;-webkit-animation:circle 10s infinite linear; -moz-animation:circle 10s infinite linear;  animation:circle 10s infinite linear; }
-    .loginBox{width: 400px; height:450px; top:20%;  box-sizing: border-box; border-radius:4px;  background:rgba(255,255,255,0.9); border-radius: 10px; box-shadow: 0 10px 10px rgba(0,0,0,0.1); }
+    .loginBox{width: 400px; height:450px; left:50%; top:50%; transform:translate(-50%,-50%);  box-sizing: border-box; border-radius:4px;  background:rgba(255,255,255,0.9); border-radius: 10px; box-shadow: 0 10px 10px rgba(0,0,0,0.1); }
     .loginForm{
         padding:30px 40px 20px;
     }
-    .loginMan{ position: absolute; right:-50px; bottom:-50px;}
+    .loginMan{ position: absolute;}
     .loginBtnbox{ text-align: center; padding-top:20px;}
     .loginBtnbox .el-button{ width: 100%; padding: 14px 20px;}
     .loginBox{

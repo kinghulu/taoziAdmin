@@ -1,6 +1,6 @@
 <template>
     <div class="adminTop">
-        <div class="adminTop-left"><img src="../../assets/images/logo.jpg"></div>
+        <div class="adminTop-left"><img src="../../assets/images/logo.png"></div>
         <div class="adminTop-right">
             <div class="adminleft-user">
                 <div class="adminleft-name">
@@ -133,16 +133,14 @@
             logoutFn(){
                 this.$ajax({
                     method: 'post',
-                    url:  'resource/member/logut',
-                    data: this.qs.stringify({
-                        uid: this.user.uid
-                    })
+                    url:  '/admin/user/logout'
                 }).then( (res)=> {
-                    this.$store.dispatch('LogoutUser');
-                    this.$router.replace("/login");
+                    
+                    //this.$store.dispatch('LogoutUser');
+                    //this.$router.replace("/login");
                 }).catch((response) => {
-                    this.$router.replace("/login");
-                    this.$store.dispatch('LogoutUser');
+                    //this.$router.replace("/login");
+                    //this.$store.dispatch('LogoutUser');
                 });
             },
             //显示修改密码弹框
@@ -194,19 +192,19 @@
 
 </script>
 <style rel="stylesheet/scss"  type="text/scss" lang="scss">
-.adminTop{ height:70px; position: fixed; left:0; top:0; right:0; z-index: 32; background:#FCD000;   font-size:18px; color:#666666;}
-    .adminTop-left{ float:left; height:55px;padding-left: 6px; margin-top:4px; line-height: 42px;}
-    .adminTop-left img{ user-select: none; height:55px; max-width:100%; float:left; margin-top:4px;}
-    .adminCont{ padding-top:70px; padding-left:220px; box-sizing: border-box; min-height:100vh; background: #f6f8f7;}
+.adminTop{ height:60px; position: fixed; left:0; top:0; right:0; z-index: 32; background:#54515f;   font-size:18px; color:#666666;}
+    .adminTop-left{ float:left; height:45px;padding-left: 6px; margin-top:4px; line-height: 42px;}
+    .adminTop-left img{ user-select: none; height:45px; max-width:100%; float:left; margin-top:4px;}
+    .adminCont{ padding-top:60px; padding-left:220px; box-sizing: border-box; min-height:100vh; background: #f6f8f7;}
     .adminTop-right{float:right;}
     .adminBox{ padding:20px;}
     .adminleft-pic{ float:left; height:35px; width:35px; overflow: hidden; border-radius: 50%; margin-top: 11px; margin-right:6px;}
     .adminleft-pic img{ width:100%; height:100%;}
-    .adminleft-name{ float:left; height:70px; margin-top:0px; line-height:70px; padding:0 10px 0 10px; cursor: pointer;}
+    .adminleft-name{ float:left; height:60px; margin-top:0px; line-height:60px; padding:0 10px 0 10px; cursor: pointer;}
     .adminleft-name:hover{ background: rgba(255,255,255,0.1);}
     .adminFoot{ text-align: center; color:#999; font-size:12px; padding:10px;}
     .adminleft-user{ float:left;}
-    .adminleft-user .el-dropdown{ color:#666;}
+    .adminleft-user .el-dropdown{ color:#ccc;}
     .adminTop img{ vertical-align: top;}
     
     .el-dropdown-menu{

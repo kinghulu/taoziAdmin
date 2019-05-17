@@ -1,6 +1,5 @@
 <template>
     <div class="canvas">
-        <!-- <h3>欢迎！</h3><div class="info"><p>欢迎您使用学习资料系统！</p><p>进行课件上传的功能如下:</p><p>1、新增资源：根据分类上传相关资源</p><p>2、资源匹配：将资源匹配到具体的课次上（可以同一个资源匹配到多个课次上）</p><p>3、预习资源上传：上传相关的课堂预习资源</p><p>4、课后修炼资源上传：填写修炼题目数量，上传对应的资源包</p><p>5、复习资源上传：上传相关的课程复习资源</p><p>6、发布：确认信息无误后可点击</p><p>特别提示：发布后，学员开始做题后，禁止修改课件信息</p></div>-->
         <div class="sky"></div>
         <div class="bee">
             <div :class="['box', {'show': boxShow}, {'big': boxBig}]">{{ this.boxString }}</div>
@@ -55,36 +54,36 @@
                 talking: false,
                 stepEnd: 0,
                 firstPartQuotes: [
-                    '欢迎您使用学习资料系统！',
-                    '进行课件上传的功能如下:',
-                    '1、新增资源：根据分类上传相关资源',
-                    '2、资源匹配：将资源匹配到具体的课次上（可以同一个资源匹配到多个课次上）',
-                    '3、预习资源上传：上传相关的课堂预习资源',
-                    '4、课后修炼资源上传：填写修炼题目数量，上传对应的资源包',
-                    '5、复习资源上传：上传相关的课程复习资源',
-                    '特别提示：发布后，学员开始做题后，禁止修改课件信息'
+                    '欢迎您使用后台管理系统！',
+                    '使用愉快！'
                 ]
             }
-        }
-
-        ,
+        },
         methods: {
+            getUserInfo(){
+                this.$ajax({
+                    method: 'post',
+                    url:  '/admin/user/getinfo'
+                }).then( (res)=> {
+                    
+                    console.log(res)
+                    
+                }).catch( (res)=> { });
+            },
             generateQuote(list) {
                 let time = this.stepEnd;
                 list.forEach((quote, i) => {
-                        this.steps.push({
-                            big: false,
-                            sentence: quote,
-                            start: time,
-                            end: time + 5
-                        });
-                        time = time + 6
-                        if (i === (this.firstPartQuotes.length - 1)) {
-                            this.stepEnd = time
-                        }
+                    this.steps.push({
+                        big: false,
+                        sentence: quote,
+                        start: time,
+                        end: time + 5
+                    });
+                    time = time + 6
+                    if (i === (this.firstPartQuotes.length - 1)) {
+                        this.stepEnd = time
                     }
-
-                )
+                })
             },
             beeTalks(step) {
                 this.boxString = step.sentence;
@@ -125,8 +124,9 @@
             }
         },
         mounted() {
+            this.getUserInfo();
             this.generateQuote(this.firstPartQuotes);
-            this.newInterval()
+            this.newInterval();
         },
         beforeDestroy() {
             this.clear()
@@ -157,7 +157,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: calc(100vh - 70px);
+        height: calc(100vh - 60px);
         background-color: $g;
 
         .controls {

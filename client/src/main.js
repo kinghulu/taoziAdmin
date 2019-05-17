@@ -40,9 +40,7 @@ Vue.use(util);
 //生成Token
 Vue.prototype.initToken();
 
-if(store.getters.token){
-    axios.defaults.headers.common['Authorization'] = "Bearer " + store.getters.token;
-}
+
 
 // 请求前加密参数
 axios.interceptors.request.use( config => {
@@ -61,16 +59,16 @@ axios.interceptors.request.use( config => {
 axios.interceptors.response.use(
   response => {
       let rd = response.data;
-      if(rd.code == 200000){
+      if(rd.code == 20000){
           return rd.data;
       }else{
           Vue.prototype.$message.error(rd.msg);
       }
-      if(rd.code == 400025){
+      if(rd.code == "400025"){
           store.dispatch('LogoutUser')
           router.replace({path: '/login'});
       }
-      if(rd.code == 400003){
+      if(rd.code == "400003"){
          router.replace({path: '/nopermission'});
       }
       return Promise.reject(rd)   // 返回接口返回的错误信息
@@ -104,31 +102,10 @@ router.beforeEach((to, from, next) => {
         if (user) { // 判断是否有选择,没有登录 
             //判断是否被更改            
             let u_obj = JSON.parse(user);
-            let tmpkey =  md5(u_obj.uid+u_obj.auth+"studyfiles");
+            axios.defaults.headers.common['Authorization'] = u_obj.token;
+            let tmpkey =  md5(u_obj.name+u_obj.avatar+"taoziadmin");
             if(u_obj.localkey == tmpkey){
-                let rolestr = to.meta.role;
-                if(rolestr){
-                    if(u_obj.uid!=1){
-                        if(u_obj.auth){
-                            let enable = u_obj.auth.indexOf(rolestr)>-1;
-                            if(enable){
-                                next();
-                            }else{
-                                //没有权限
-                                next({ path: '/nopermission' });
-                            }
-                        }else{
-                            //没有权限
-                            next({ path: '/nopermission' });
-                        }
-                    }else{
-                        // 管理不鉴权
-                        next();
-                    } 
-                }else{
-                    //该页面定义的role为空则不需要权限验证
-                    next(); 
-                }             
+                next();            
             }else{
                 next({ path: '/login' });
             }

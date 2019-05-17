@@ -11,7 +11,7 @@ export const constantRouterMap = [
     // { path: '/nopermission', name: 'P403', component:_import('error/P403') }, 
     { path: '/', component:_import('layout/Main'), meta: { title: "main", cn: "首页" },
         children:[
-            { path: '', component: _import('Dashboard'), name: "Index", meta: { cn: "首页操作指南", ico: "mb-shouye", id: "n1", role:"", hidden: false }},
+            { path: '', component: _import('Dashboard'), name: "Index", meta: { cn: "首页", ico: "mb-shouye", id: "n1", role:"", hidden: false }},
             { path: 'nopermission', name: 'P403', component:_import('error/P403'), meta: { cn: "没有权限", role:"", hidden: true } },
             { path: 'coursematch', component:_import('layout/PublicView'), meta: { cn: "课程资源配置", ico: "mb-kechengbiao", id: "n2", role:"a,d,c,e", hidden: false },
             children:[
