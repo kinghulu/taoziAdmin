@@ -30,6 +30,7 @@ let carr = {
     'fail':{ code : 20001, msg:"操作失败，请重试"},
     'jsonWebTokenError':{ code : 30001, msg:"验证身份失败，请重新登录！"},
     'userLoginError':{ code : 30002, msg:"用户名或密码错误！"},
+    'noPermission':{ code : 30003, msg:"没有权限"},
     'pageNotFound':{ code : 40001, msg:"接口不见了！"},
     'findAnError':{ code : 40002, msg:"发现八阿哥！"},
 };

@@ -26,7 +26,7 @@
 ***************************************************************************************/
 var express = require('express');
 const isProd = process.env.NODE_ENV === 'production';
-
+var path = require('path');
 
 var app = express();
 
@@ -58,6 +58,8 @@ app.all('/admin/*', function(req, res, next) {
   next();
 });
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 var session = require('express-session')
 const MongoStore = require('connect-mongo')(session);
 app.use(session({
@@ -80,13 +82,11 @@ app.use(session({
 /**
  * 路由
 */
-
 const {api,admin} = require('./routes');
 app.use('/api', api);
 app.use('/admin', admin);
 
 app.get('/', (req, res) => res.send("Hello World"));
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

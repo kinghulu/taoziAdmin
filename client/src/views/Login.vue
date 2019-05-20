@@ -84,15 +84,12 @@
                             })
                         }).then( (res)=> {
                             this.loginLoading = false;
-                            console.log(res)
                             let userobj = res;
 
                             this.$ajax.defaults.headers.common['Authorization'] = userobj.token;
-                            
 
                             //读取时判断是否一直
                             userobj.localkey = this.md5(userobj.name+userobj.avatar+"taoziadmin");
-
                             this.$store.dispatch('LoginByName',userobj);
                             this.$router.replace("/");
                         }).catch( (res)=> {

@@ -30,7 +30,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 //接口地址
 Vue.prototype.baseURL  = process.env.NODE_ENV === 'production'
 ? 'https://mlstu.baidu.cn/'
-: 'http://localhost:3000/';
+: 'http://localhost:3000/'; //正式地址和测试地址
 
 axios.defaults.baseURL = Vue.prototype.baseURL;
 //工具
@@ -64,11 +64,11 @@ axios.interceptors.response.use(
       }else{
           Vue.prototype.$message.error(rd.msg);
       }
-      if(rd.code == "400025"){
+      if(rd.code == "30001"){
           store.dispatch('LogoutUser')
           router.replace({path: '/login'});
       }
-      if(rd.code == "400003"){
+      if(rd.code == "30003"){
          router.replace({path: '/nopermission'});
       }
       return Promise.reject(rd)   // 返回接口返回的错误信息
@@ -114,7 +114,6 @@ router.beforeEach((to, from, next) => {
             NProgress.done(); // 在hash模式下 改变手动改变hash 重定向回来 不会触发afterEach 暂时hack方案 ps：history模式下无问题，可删除该行！
         }
     }
-   
         //next({ path: '/nopermission' });
  
 });

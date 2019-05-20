@@ -65,9 +65,6 @@
                     method: 'post',
                     url:  '/admin/user/getinfo'
                 }).then( (res)=> {
-                    
-                    console.log(res)
-                    
                 }).catch( (res)=> { });
             },
             generateQuote(list) {

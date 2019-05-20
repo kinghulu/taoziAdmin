@@ -50,7 +50,7 @@ router.use(function(req, res, next) {
             return;
         }else{
             req.user = decoded.user;
-            console.log(req.session.uid)
+            req.session.uid = req.user.id;
             return next();
         }
     });
@@ -66,6 +66,7 @@ router.post('/user/login', AdminUserControl.loginByName );
 router.post('/user/logout', AdminUserControl.logOut );
 router.post('/user/add', AdminUserControl.addUserFn );
 router.post('/user/getinfo', AdminUserControl.getUserInfo );
+router.post('/user/editpassword', AdminUserControl.postEditUserPassword );
 
 
 module.exports = router;

@@ -6,7 +6,10 @@
                 <div class="adminleft-name">
                     <el-dropdown @command="handleTopUserMenu">
                         <div class="el-dropdown-link">
-                           欢迎， {{user.real_name}} 老师<i class="el-icon-caret-bottom el-icon-right"></i>
+                           <div class = "top-user-menu">
+                            <img class="top-avatar" :src="user.avatar" />
+                            {{user.name}} <i class="el-icon-caret-bottom el-icon-right"></i>
+                           </div>
                         </div>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="edit"><i class="mb mb-bianji"></i> 修改密码</el-dropdown-item>
@@ -18,13 +21,8 @@
         </div>
 
         <!--修改密码-->
-        <el-dialog title="修改密码" :visible.sync="dialogFormVisible" :append-to-body="true">
-            <el-alert
-    title="请输入相关信息进行修改密码的验证"
-    type="info"
-    description="密码长度需为8-20位，需包含英文字符/数字（英文字符区分大小写，符号区分全角/半角）"
-    show-icon /> 
-            <el-form ref="editForm" class="editPass" label-width="100px" :model="editpwd" :rules="rules" style="margin-top:20px">
+        <el-dialog title="修改密码" :visible.sync="dialogFormVisible" :append-to-body="true" :close-on-click-modal="false">
+            <el-form ref="editForm" class="editPass" label-width="100px" :model="editpwd" :rules="rules">
                 <el-form-item prop="oldPass" label="原密码">
                     <el-col :span="22">
                         <el-input auto-complete="off" v-model="editpwd.oldPass" show-password />
@@ -67,17 +65,6 @@
                     callback()
                 }
             }
-            const checkNewPwd= (rule, value, callback) => {
-                if (value.length<8 || value.length>20) {
-                    callback(new Error('长度在 8 到 20 个字符'));
-                }else {
-                    if(this.checkPassFormat(value)){
-                        callback()
-                    }else{
-                        callback(new Error('最少拥有大写字母/小写字母/数字中的两项'));
-                    }
-                }
-            }
             const checkConfirmPwd= (rule, value, callback) => {
                 if (value!=this.editpwd.newPass) {
                     callback(new Error('两次输入密码不一致'));
@@ -99,11 +86,11 @@
                rules: {
                     oldPass:[
                         { required: true, message: '请输入原密码', trigger: 'blur' },
-                        { min:8, max: 20, message: '长度在 8 到 20 个字符', trigger: 'blur' }
+                        { min:6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
                     ],
                     newPass: [
                         { required: true, message: '请输入新密码', trigger: 'blur' },
-                        { validator: checkNewPwd, trigger: 'change' }
+                        { min:6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
                     ],
                     checkPass: [
                         { required: true, message: '请输入确认新密码', trigger: 'blur' },
@@ -135,12 +122,11 @@
                     method: 'post',
                     url:  '/admin/user/logout'
                 }).then( (res)=> {
-                    
-                    //this.$store.dispatch('LogoutUser');
-                    //this.$router.replace("/login");
+                    this.$store.dispatch('LogoutUser');
+                    this.$router.replace("/login");
                 }).catch((response) => {
-                    //this.$router.replace("/login");
-                    //this.$store.dispatch('LogoutUser');
+                    this.$router.replace("/login");
+                    this.$store.dispatch('LogoutUser');
                 });
             },
             //显示修改密码弹框
@@ -157,20 +143,20 @@
                         this.loading = true;
                         this.$ajax({
                             method: 'post',
-                            url:  'resource/member/usersavepwd',
+                            url:  '/admin/user/editpassword',
                             data: this.qs.stringify(
                                 {
-                                    user_id:this.user.uid,
-                                    user_new_pwd:this.md5(this.editpwd.newPass),
-                                    user_old_pwd:this.md5(this.editpwd.oldPass)
+                                    newPassword:this.md5(this.SECERT + this.editpwd.newPass),
+                                    oldPassword:this.md5(this.SECERT + this.editpwd.oldPass),
+                                    confirmPassword:this.md5(this.SECERT + this.editpwd.checkPass),
                                 }
                             )
                         }).then( (res)=> {
                             this.loading = false;
-                            this.$notify({title: '修改成功', message: '成功修改密码，请重新登录!',type: 'success'});
+                            this.$notify({title: '成功', message: '成功修改密码!',type: 'success'});
                             this.dialogFormVisible=false;
-                            this.$store.dispatch('LogoutUser');
-                            this.$router.replace("/login");
+                            // this.$store.dispatch('LogoutUser');
+                            // this.$router.replace("/login");
                         }).catch( (res)=> {
                             this.loading = false;
                             this.editpwd.uCode='';
@@ -180,12 +166,18 @@
                         return false;
                     }
                 });
-            }
+            },
         },
         mounted(){
             let userinfo = this.$store.getters.user;
             if(userinfo){
-                this.user = JSON.parse(userinfo);
+                let uobj = JSON.parse(userinfo);
+                if(!uobj.avatar){
+                    uobj.avatar = this.baseURL + "/imgs/avatar3.jpg";
+                }else{
+                    uobj.avatar = this.baseURL + uobj.avatar;
+                }
+                this.user = uobj;
             }
         }
     }
