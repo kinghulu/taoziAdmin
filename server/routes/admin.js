@@ -50,7 +50,6 @@ router.use(function(req, res, next) {
             return;
         }else{
             req.user = decoded.user;
-            req.session.uid = req.user.id;
             return next();
         }
     });

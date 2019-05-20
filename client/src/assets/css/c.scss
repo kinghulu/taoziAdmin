@@ -132,6 +132,27 @@ a.el-button{ text-decoration: none;}
    100%{opacity:0;transform:translateY(20px)}
   }
 
+   /*breadcrumb*/
+ .breadcrumb-enter-active,
+ .breadcrumb-leave-active {
+   transition: all .5s;
+ }
+ 
+ .breadcrumb-enter,
+ .breadcrumb-leave-active {
+   opacity: 0;
+   transform: translateX(20px);
+ }
+ 
+ .breadcrumb-move {
+   transition: all .5s;
+ }
+ 
+ .breadcrumb-leave-active {
+   position: absolute;
+ }
+ 
+
   .el-button.disabled{ opacity: 0.6;}
 
   .ycourse{

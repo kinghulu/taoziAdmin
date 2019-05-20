@@ -3,7 +3,7 @@
         <Top/>
         <LeftNav/>
         <div class="container">
-            <!-- <Crumbs/> -->
+            <Crumbs/>
             <section class="mainBox">
                 <transition name="fadeDown" mode="out-in" appear>
                     <router-view />
@@ -17,7 +17,7 @@
     import Top from './Top';
     import LeftNav from './LeftNav';
     import Footer from './Footer';
-    //import Crumbs from './Crumbs';
+    import Crumbs from './Crumbs';
     export default {
         data() {
             return {
@@ -29,7 +29,7 @@
             Top,
             LeftNav,
             Footer,
-            //Crumbs
+            Crumbs
         }
     }
 </script>

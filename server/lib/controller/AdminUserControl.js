@@ -31,10 +31,13 @@ class AdminUserControl {
                     //有效期24小时
                     let _token = jwt.sign({user:{name:user.name,id:user.id},exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)}, setting.encrypt_key);
                     req.session.uid = user.id;
+                    console.log(user)
+                    console.log(user.auth)
                     res.json(creatRes("success",{
                         token:_token,
                         name:user.name,
-                        avatar:user.avatar
+                        avatar:user.avatar,
+                        auth:user.auth
                     }))
                 }else{
                     res.json(creatRes('fail','',"该账号：" + user.name + "已被禁用，请联系管理员"));
@@ -61,7 +64,6 @@ class AdminUserControl {
         }
         try{
             const user =await AdminUserModel.findOne(userObj);
-            console.log(user)
             if (user) {
                 res.json(creatRes("success",{name:user.name,avatar:user.avatar}))
             }else{
@@ -106,6 +108,7 @@ class AdminUserControl {
                             pwd: f_pwd, //密码
                             avatar:f_avatar,//头像
                             email:f_email, //邮箱
+                            auth:''
                             //creator:req.session.loginUser.name//创建者
                         }
                         console.log(obj)

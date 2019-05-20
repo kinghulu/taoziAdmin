@@ -1,13 +1,5 @@
 <template>
     <div class="files">
-        <el-breadcrumb class="breadcrumbs" separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item>
-                <router-link :to="{name:'RoleList'}">权限管理</router-link>
-            </el-breadcrumb-item>
-            <el-breadcrumb-item>
-                <span>角色权限配置</span>
-            </el-breadcrumb-item>
-        </el-breadcrumb>
         <div class="pagetopBox">
             <h2 class="pageTitle">角色权限配置</h2>
         </div>

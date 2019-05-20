@@ -1,13 +1,5 @@
 <template>
     <div class="files">
-        <el-breadcrumb class="breadcrumbs" separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item>
-                <router-link :to="{name:'UserList'}">系统管理</router-link>
-            </el-breadcrumb-item>
-            <el-breadcrumb-item>
-                <span>用户管理</span>
-            </el-breadcrumb-item>
-        </el-breadcrumb>
         <div class="pagetopBox">
             <h2 class="pageTitle">用户管理</h2>
             <el-button type="success" icon='el-icon-plus' @click="goAddParse">新增用户</el-button>

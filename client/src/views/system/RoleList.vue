@@ -1,13 +1,5 @@
 <template>
     <div class="files">
-        <el-breadcrumb class="breadcrumbs" separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item>
-                <router-link :to="{name:'RoleList'}">系统管理</router-link>
-            </el-breadcrumb-item>
-            <el-breadcrumb-item>
-                <span>权限管理</span>
-            </el-breadcrumb-item>
-        </el-breadcrumb>
         <div class="pagetopBox">
             <h2 class="pageTitle">权限管理</h2>
             <el-button type="success" icon='el-icon-plus' @click="goAddParse">新增权限角色</el-button>

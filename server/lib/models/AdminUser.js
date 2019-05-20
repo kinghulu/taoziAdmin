@@ -36,6 +36,7 @@ var AdminUserSchema = new Schema({
     email:String, //邮箱
     isDisabled:{ type: Boolean, default: true }, //是否禁用
     creator:String,//创建者
+    auth:String,  //角色名
     last_login_time:{ type: String, default: moment().format("YYYY-MM-DD HH:mm:ss") },//最近登录时间
     roles:Array,//所属角色列表
 });
