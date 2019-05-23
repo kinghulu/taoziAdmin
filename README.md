@@ -3,6 +3,10 @@
 ## 介绍
 基于Node.js、Express、MongoDB、Vue的后端管理系统。
 
+预览图
+![登录](http://yaohuitao.com/a/img/git/git_taoziAdmin_md1.jpg)
+![主界面](http://yaohuitao.com/a/img/git/git_taoziAdmin_md2.jpg)
+
 ## 软件架构
 为了结构清晰，前后端项目分开运行
     <br>---client:前端项目
@@ -25,17 +29,20 @@ git clone https://gitee.com/yaohuitao/taoziAdmin.git
 ****
 3、启动前端
 
-    `cd client
+    cd client
     npm install
-    npm run serve`
+    npm run serve
 
 4、后台测试账号：admin/abc123
 
 
-## 使用说明
-
-### 接口调用说明
-
+****
+## 接口调用说明
+### 接口sign字段校验
+为了增加接口安全，加入sign字段，生成规则如下：
+所有参数和值组成 key=value的形式进行排序,然后用“&”拼接成字符串，
+    如：name=admin&pwd=15c556151b6b908d9a835efcee721e9a15a303177bc3fbd375fc2769c6d9bdc7
+然后加盐，进行md5加密。
 
 ****
 ## 功能介绍
@@ -48,11 +55,6 @@ git clone https://gitee.com/yaohuitao/taoziAdmin.git
 ### 滑动验证
 后续迭代
 
-### 接口sign字段校验
-为了增加接口安全，加入sign字段，生成规则如下：
-所有参数和值组成 key=value的形式进行排序,然后用“&”拼接成字符串，
-    如：name=admin&pwd=15c556151b6b908d9a835efcee721e9a15a303177bc3fbd375fc2769c6d9bdc7
-然后加盐，进行md5加密。
 
 ### 权限设计
 * 权限规则存放在前端项目中，尽量减少与后端的耦合。
