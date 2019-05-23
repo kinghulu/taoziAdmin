@@ -1,7 +1,8 @@
 # TaoziAdmin
 
 ## 介绍
-基于Node.js、Express、MongoDB、Vue、Element-ui的后端管理系统。
+基于Node.js、Express、MongoDB、Vue、Element-ui的后台管理系统。<br>
+目前功能，登录（JWT+session)、用户管理（添加、删除、编辑、启用/禁用）,权限管理（添加、删除、编辑、启用/禁用），接口服务等。
 
 预览图
 ![登录](http://yaohuitao.com/a/img/git/git_taoziAdmin_md1.jpg)
