@@ -5,8 +5,8 @@
 
 ## 软件架构
 为了结构清晰，前后端项目分开运行
-    ---client:前端项目
-    ---server:后端项目
+    <br>---client:前端项目
+    <br>---server:后端项目
 
 
 ## 安装教程
@@ -17,15 +17,17 @@ git clone https://gitee.com/yaohuitao/taoziAdmin.git
 ****
 
 2、启动后端api
+
     cd server
     npm install
     npm run serve
 
 ****
 3、启动前端
-    cd client
+
+    `cd client
     npm install
-    npm run serve
+    npm run serve`
 
 4、后台测试账号：admin/abc123
 
