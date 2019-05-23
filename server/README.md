@@ -1,18 +1,11 @@
-# 后端
+# 后端(API)
+只提供接口服务
 
-#### 介绍
-基于Node.js、Express、MongoDB、Vue的后端管理系统。
+### 介绍
+基于Node.js、Express、MongoDB、jsonwebtoken的后端管理系统。
 
-#### 软件架构
-为了结构清晰，前后端项目分开运行
-    ---client:前端项目
-    ---server:后端项目
-
-
-#### 安装教程
-前端项目
+### 安装教程
 1. npm install
-### 开发 
 2. 需要先启动mongo数据库
     mongod -f conf/mongod.conf
 其中 conf/mongod.conf 为启动mongo配置文件的路径。
@@ -22,7 +15,7 @@
 3. npm run serve
 
 
-#### 使用说明
+### 使用说明
 
 1. 密码规则
    数据库存加密好的字符串，加密规则：md5(SECERT + password)
