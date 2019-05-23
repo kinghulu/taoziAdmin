@@ -1,7 +1,7 @@
 # TaoziAdmin
 
 ## 介绍
-基于Node.js、Express、MongoDB、Vue的后端管理系统。
+基于Node.js、Express、MongoDB、Vue、Element-ui的后端管理系统。
 
 预览图
 ![登录](http://yaohuitao.com/a/img/git/git_taoziAdmin_md1.jpg)
