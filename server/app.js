@@ -39,25 +39,6 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-app.all('/api/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-  res.header("X-Powered-By",' 3.2.1')
-  res.header("Content-Type", "application/json;charset=utf-8");
-  next();
-});
-
-app.all('/admin/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://debug.dir");
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Headers", "X-Requested-With,authorization");
-  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-  res.header("X-Powered-By",' 3.2.1')
-  res.header("Content-Type", "application/json;charset=utf-8");
-  next();
-});
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 var session = require('express-session')
@@ -68,7 +49,7 @@ app.use(session({
   saveUninitialized: false,  // 是否自动保存未初始化的会话，建议false
   resave: false,  // 是否每次都重新保存会话，建议false
   cookie: {
-      maxAge: 12 * 3600 * 1000  // 有效期，单位是毫秒
+      maxAge: 8 * 3600 * 1000  // 单位是毫秒,有效期 8 小时 
   },
   store: new MongoStore({
       db: "session",
@@ -78,6 +59,25 @@ app.use(session({
   })
 }));
 
+
+app.all('/api/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By",' 3.2.1')
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+});
+
+app.all('/admin/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Headers", "X-Requested-With,authorization");
+  res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  res.header("X-Powered-By",' 3.2.1')
+  res.header("Content-Type", "application/json;charset=utf-8");
+  next();
+});
 
 /**
  * 路由

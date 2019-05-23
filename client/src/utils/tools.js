@@ -45,7 +45,7 @@ export default {
                 tmparr.push(itemstr);
             }
             tmparr=tmparr.sort();
-            let pstr = tmparr.join("");
+            let pstr = tmparr.join("&");
             pstr = pstr + SECERT;
             let sign = this.md5(pstr);
             //设置每次时间戳
@@ -57,12 +57,16 @@ export default {
         Vue.prototype.isHasAuth = function(rolename){
             let ustr = this.$store.getters.user;
             let uobj = JSON.parse(ustr);
-            if(uobj.uid==1){
+            if(uobj.role=="admin"){
                 return true;
             }else{
-                let enable = uobj.auth.indexOf(rolename)>-1;
-                if(enable){
-                    return true;
+                if(uobj.rules){
+                    let enable = uobj.rules.indexOf(rolename)>-1;
+                    if(enable){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }else{
                     return false;
                 }

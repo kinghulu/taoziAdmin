@@ -5,16 +5,16 @@
                 <el-menu-item v-for="(item,i) in navlist" :key="i" :index="item.meta.id" :route="{name:item.name}" v-show="!item.meta.hidden"><i class="mb" :class="item.meta.ico"></i><span>{{item.meta.cn}}</span></el-menu-item>
             </el-menu> -->
 
-            <el-menu :default-active="$route.meta.id" :collapse="isCollapse" router>
+            <el-menu :default-active="$route.meta.role" :collapse="isCollapse" router> 
                 <template v-for="(item,i) in navlist">
-                    <el-submenu :index="item.meta.id" :key="i" v-if="item.children&&item.children.length>0">
+                    <el-submenu :index="item.meta.role" :key="i" v-if="item.children&&item.children.length>0">
                         <template slot="title">
                             <i class="mb" :class="item.meta.ico"></i>
                             <span slot="title">{{item.meta.cn}}</span>
                         </template>
-                        <el-menu-item v-for="(citem,j) in item.children" :index="citem.meta.id" :route="{name:citem.name}" :key="j">{{citem.meta.cn}}</el-menu-item>
+                        <el-menu-item v-for="(citem,j) in item.children" :index="citem.meta.role" :route="{name:citem.name}" :key="j">{{citem.meta.cn}}</el-menu-item>
                     </el-submenu>
-                    <el-menu-item :index="item.meta.id" :route="{name:item.name}" :key="i" v-else>
+                    <el-menu-item :index="item.meta.role" :route="{name:item.name}" :key="i" v-else>
                         <i class="mb" :class="item.meta.ico"></i>
                         <span slot="title">{{item.meta.cn}}</span>
                     </el-menu-item>
@@ -44,9 +44,9 @@
                         let newNav=[];
                         let user = this.$store.getters.user;
                         let u_obj = JSON.parse(user);
-                        let u_auth = u_obj.auth;
+                        let u_auth = u_obj.rules;
                         u_auth = u_auth ? u_auth:'';
-                        let u_id = u_obj.uid;
+                        let u_role = u_obj.role;
                         //根据权限生成相应得navlist;
                         for(let i in navdata){
                             let p_item = navdata[i];
@@ -54,7 +54,7 @@
                                 let _rolearr = p_item.meta.role.split(",");
                                 let _hasrole = false;
                                 for(let i in _rolearr){
-                                    if(u_auth.indexOf(_rolearr[i])>-1 || u_id ==1){
+                                    if(u_auth.indexOf(_rolearr[i])>-1 || u_role =="admin"){
                                         _hasrole = true;
                                         break;
                                     }
@@ -63,7 +63,7 @@
                                     let carr=[];
                                     for(let j in p_item.children){
                                         let c_item = p_item.children[j];
-                                        if(u_auth.indexOf(c_item.meta.role)>-1 || u_id ==1){
+                                        if(u_auth.indexOf(c_item.meta.role)>-1 || u_role =="admin"){
                                             if(!c_item.meta.hidden){
                                                 carr.push(c_item);
                                             }
@@ -89,7 +89,7 @@
     .el-menu-admin{ padding-top: 0px;}
     @media screen and (max-width:764px){
         .el-menu-admin{ padding-top:0px;}
-        .adminleft{font-size:14px; position: relative; left:0;top:70px; width:100%; bottom: auto;}
+        .adminleft{font-size:14px; position: relative; left:0; width:100%; bottom: auto;}
     }
 </style>
 <style rel="stylesheet/scss"  type="text/scss" lang="scss">

@@ -30,7 +30,7 @@
                 let matched = this.$route.matched.filter(item => item.name);
                 console.log(matched)
                 const first = matched[0];
-                if(first.path != "/"){
+                if(first&&first.path != "/"){
                     //首页不显示面包屑
                     this.getParentNode(first);
                 }

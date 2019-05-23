@@ -30,3 +30,4 @@ db.on('close', function () {
 
 
 exports.AdminUser = require('./AdminUser');
+exports.AdminRole = require('./AdminRole');

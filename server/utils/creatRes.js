@@ -33,6 +33,9 @@ let carr = {
     'noPermission':{ code : 30003, msg:"没有权限"},
     'pageNotFound':{ code : 40001, msg:"接口不见了！"},
     'findAnError':{ code : 40002, msg:"发现八阿哥！"},
+    'paramsMissing':{ code : 50001, msg:"请求参数不全，请检查后重试！"},
+    'hasExistError':{ code : 50002, msg:"已存在该记录，不允许重复"},
+    'addRecordError':{ code : 50003, msg:"添加失败，请重试"},
 };
  /**
  * 定义接口返回

@@ -21,7 +21,7 @@
                         <el-col :span="6"><valid-code ref="validCodeComp" :value.sync="validCode" height="50px" style="margin-left:4px;" /> </el-col>
                     </el-form-item>
                     <el-form-item>
-                        <div class="loginBtnbox"><el-button type="primary" :loading="loginLoading" @click="submitForm" size="large">登录</el-button></div>
+                        <div class="loginBtnbox"><el-button type="warning" :loading="loginLoading" @click="submitForm" size="large">登录</el-button></div>
                         <!-- <div class="tips">如忘记密码，请联系管理员</div> -->
                     </el-form-item>
                 </el-form>
@@ -89,7 +89,7 @@
                             this.$ajax.defaults.headers.common['Authorization'] = userobj.token;
 
                             //读取时判断是否一直
-                            userobj.localkey = this.md5(userobj.name+userobj.avatar+"taoziadmin");
+                            userobj.localkey = this.md5(userobj.name+userobj.role+"taoziadmin");
                             this.$store.dispatch('LoginByName',userobj);
                             this.$router.replace("/");
                         }).catch( (res)=> {

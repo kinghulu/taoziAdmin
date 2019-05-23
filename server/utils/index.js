@@ -28,3 +28,4 @@
 exports.setting = require('./setting');
 exports.tools = require('./tools');
 exports.creatRes = require('./creatRes');
+exports.checkSign = require('./checkSign');

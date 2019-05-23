@@ -32,32 +32,41 @@ var router = express.Router();
 const {
     AdminUserControl,
 } = require('../lib/controller');
-const { setting,creatRes } = require('../utils');
+const { setting,creatRes,checkSign,tools } = require('../utils');
 
 var jwt = require('jsonwebtoken');
-
+//校验用户身份
 router.use(function(req, res, next) {
     //不鉴权的JWT
-    let whiteRouters = ['/admin/time','/admin/user/login'];
+    let whiteRouters = ['/admin/user/login'];
     if (whiteRouters.indexOf(req.originalUrl) >= 0) {
         return next();
     }
     //定义 用token的api  对其验证
     var token = req.headers["authorization"];
-    jwt.verify(token, setting.encrypt_key, function(err, decoded) {
-        if(err){
-            res.json(creatRes("jsonWebTokenError"));
-            return;
-        }else{
-            req.user = decoded.user;
-            return next();
-        }
-    });
+    if(req.method == "OPTIONS"){
+        return next();
+    }else{
+        jwt.verify(token, setting.encrypt_key, function(err, decoded) {
+            if(err){
+                res.json(creatRes("jsonWebTokenError"));
+                return;
+            }else{
+                req.user = decoded.user;
+                if(tools.md5(setting.SECERT+req.user.id) != req.session.uid){
+                    res.json(creatRes("jsonWebTokenError"));
+                    return;
+                }else{
+                    return next();
+                }
+            }
+        });
+    }
 });
-/**
-* 获取服务器时间
-*/
-router.post('/time', (req, res) => res.json({time:new Date().getTime()}) );
+
+//校验sign签名
+router.use(checkSign);
+
 /**
 * 用户相关
 */
@@ -66,6 +75,17 @@ router.post('/user/logout', AdminUserControl.logOut );
 router.post('/user/add', AdminUserControl.addUserFn );
 router.post('/user/getinfo', AdminUserControl.getUserInfo );
 router.post('/user/editpassword', AdminUserControl.postEditUserPassword );
+router.post('/user/list', AdminUserControl.getUserList );
+router.post('/user/changestate', AdminUserControl.changeUserState );
+router.post('/user/detail', AdminUserControl.getUserDetail );
+router.post('/user/update', AdminUserControl.updateUserById );
+
+router.post('/role/add', AdminUserControl.addRoles );
+router.post('/role/list', AdminUserControl.getRoleList );
+router.post('/role/changestate', AdminUserControl.changeRoleState );
+router.post('/role/detail', AdminUserControl.getRoleDetail );
+router.post('/role/update', AdminUserControl.updateRoleById );
+
 
 
 module.exports = router;

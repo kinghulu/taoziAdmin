@@ -81,7 +81,7 @@ a.el-button{ text-decoration: none;}
 .pageTitle{ font-size:20px; font-weight: normal;}
 .course_box{ margin-top:15px;}
 .page_box{ padding:20px;}
-.pagetopBox{ display: flex; justify-content: space-between; padding-bottom:5px;}
+.pagetopBox{ display: flex; justify-content: space-between; padding-bottom:5px; align-items: center}
 .container .breadcrumbs{  padding-bottom:20px; line-height: 30px; box-sizing: border-box;}
 .form_tips{ color:#999; line-height: 20px; padding-left:10px;}
 .formbox{ padding-top:30px}
@@ -198,6 +198,3 @@ a.el-button{ text-decoration: none;}
     .ylives_item{width:100%}
 }
   
-@media screen and (max-width:764px) {
-    .footer{left:20px; position: static; padding:20px;}
-}

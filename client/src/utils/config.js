@@ -60,65 +60,19 @@ export const filesType = [
  */
 export const roleArr = [
     {
-        'title':'课程资源匹配（资源包）',
+        'title':'用户管理',
         'isShow':true, //是否显示在用户权限配置列表
-        'code':"a", //该权限大类对应的编码，用于控制左侧菜单显示
         'child':[
-            { 'name':'查看','value':'a1' },
-            { 'name':'修改','value':'a2' }
+            { 'name':'查看','value':'aa1' },
+            { 'name':'修改','value':'aa2' },
         ]
     },
     {
-        'title':'课件预览功能',
-        'isShow':false, //是否显示在用户权限配置列表
-        'code':"b",
-        'child':[
-            { 'name':'查看','value':'b1' },
-        ]
-    },
-    {
-        'title':'直播视频资源配置',
+        'title':'权限管理',
         'isShow':true, //是否显示在用户权限配置列表
-        'code':"c", 
         'child':[
-            { 'name':'查看','value':'c1' },
-            { 'name':'修改','value':'c2' },
-        ]
-    },
-    {
-        'title':'资源上传匹配',
-        'isShow':true, //是否显示在用户权限配置列表
-        'code':"d",
-        'child':[
-            { 'name':'查看','value':'d1' },
-            { 'name':'修改','value':'d2' },
-        ]
-    },
-    {
-        'title':'解析视频匹配',
-        'isShow':true, //是否显示在用户权限配置列表
-        'code':"e",
-        'child':[
-            { 'name':'查看','value':'e1' },
-            { 'name':'修改','value':'e2' },
-        ]
-    },
-    {
-        'title':'知识点功能匹配',
-        'isShow':false, //是否显示在用户权限配置列表
-        'code':"f",
-        'child':[
-            { 'name':'查看','value':'f1' },
-            { 'name':'修改','value':'f2' },
-        ]
-    },
-    {
-        'title':'用户与权限管理',
-        'isShow':false, //是否显示在用户权限配置列表
-        'code':"g",
-        'child':[
-            { 'name':'查看','value':'g1' },
-            { 'name':'修改','value':'g2' },
+            { 'name':'查看','value':'ab1' },
+            { 'name':'修改','value':'ab2' },
         ]
     }
 ];

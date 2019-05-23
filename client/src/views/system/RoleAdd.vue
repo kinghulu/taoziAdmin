@@ -10,11 +10,6 @@
                         <el-input v-model="addrole.name" />
                     </el-col>
                 </el-form-item>
-                <el-form-item prop="memo" label="备注">
-                    <el-col :span="11">
-                        <el-input v-model="addrole.memo" type="textarea" />
-                    </el-col>
-                </el-form-item>
                 <el-form-item label="权限配置">
                     <div class="rolebox">
                         <div class="roleitem" v-for="(item,i) in roles" :key="i">
@@ -44,16 +39,12 @@
                 roles:[],
                 addrole:{
                     name:"",
-                    memo:"",
                     rolestr:''
                 },
                 rules: {
                     name:[
                         { required: true, message: '请输入角色权限名称', trigger: 'blur' },
                         { max: 12, message: '不超过12个字符', trigger: 'blur' }
-                    ],
-                    memo: [
-                        { max: 100, message: '不超过100个字符', trigger: 'blur' }
                     ]
                 },
                 r_id:"",//编辑的id
@@ -70,13 +61,12 @@
                             if(this.r_type=="edit"){
                                 this.$ajax({
                                     method: 'post',
-                                    url:  'resource/role/rolesave',
+                                    url:  'admin/role/update',
                                     data: this.qs.stringify(
                                         {
                                             name:this.addrole.name,
-                                            memo:this.addrole.memo,
-                                            auth:this.addrole.rolestr,
-                                            role_id:this.r_id
+                                            rules:this.addrole.rolestr,
+                                            id:this.r_id
                                         }
                                     )
                                 }).then( (res)=> {
@@ -89,12 +79,11 @@
                             }else{
                                 this.$ajax({
                                     method: 'post',
-                                    url:  'resource/role/roleadd',
+                                    url:  'admin/role/add',
                                     data: this.qs.stringify(
                                         {
                                             name:this.addrole.name,
-                                            memo:this.addrole.memo,
-                                            auth:this.addrole.rolestr
+                                            rules:this.addrole.rolestr
                                         }
                                     )
                                 }).then( (res)=> {
@@ -142,16 +131,15 @@
                 this.pageloading = true;
                 this.$ajax({
                     method: 'post',
-                    url:  'resource/role/rolesavelist',
+                    url:  '/admin/role/detail',
                     data:this.qs.stringify({
-                        role_id:id
+                        id:id
                     })
                 }).then( (res)=> {
                     this.pageloading = false;
                     this.addrole.name = res.name;
-                    this.addrole.memo = res.memo;
                     let roles = JSON.parse(JSON.stringify(roleArr));
-                    let rolestr = res.auth;
+                    let rolestr = res.rules;
                     let autharr = rolestr.split(",");
                     let rolearr = [];
                     for(let i in roles){
@@ -179,12 +167,16 @@
             
         },
         mounted() {
-            if(!this.isHasAuth("g")){
+            if(this.$route.name == "RoleEdit"){
+                this.r_type = "edit"
+            }else{
+                this.r_type = "add"
+            }
+            if(!this.isHasAuth("ab")){
                 this.$router.replace({name: 'P403'});
             };
             this.r_id = this.$route.params.id;
-            this.r_type = this.$route.params.type;
-            if(this.r_id){
+            if(this.r_id){ 
                 this.getRoleDetail(this.r_id);
             }else{
                 let roletmp = [];

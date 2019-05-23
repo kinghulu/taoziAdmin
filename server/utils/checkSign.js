@@ -17,29 +17,45 @@
  *  ...:::           ::::::::::::'              ``::.
  * ```` ':.          ':::::::::'                  ::::..
  *                    '.:::::'                    ':'````..
- * --------------- 接口
+ * --------------- 检验sign参数
  * ---------------- by taozi 578999047@qq.com
- * ----------------- 20190515
+ * ----------------- 20190521
  * ヽ｀、ヽ｀｀、ヽ｀ヽ｀、、ヽ ｀ヽ 、ヽ｀🌙｀ヽヽ｀ヽ、ヽ｀ヽ｀、ヽ｀｀、ヽ 
  * 、｀｀、 ｀、ヽ｀ 、、ヽ｀｀、ヽ、｀｀、、ヽ｀｀、 、ヽヽ｀、｀、、ヽヽ、｀｀
  * 、 、 ヽ｀、ヽ｀｀、ヽ｀ヽ｀、、ヽ ｀ヽ 、ヽ｀｀ヽ、💃｀ヽ🏃、、🚶｀🚶🚶ヽ｀、
 ***************************************************************************************/
-
-var express = require('express');
-var router = express.Router();
-const {
-    ApiControl,
-} = require('../lib/controller');
-
-const { setting,checkSign } = require('../utils');
-
-//校验sign签名
-router.use(checkSign);
-
 /**
-* 获取服务器时间
-*/
-router.post('/time', ApiControl.getTime);
-
-
-module.exports = router;
+ * 所有参数和值组成 key=value的形式进行排序,然后用“&”拼接成字符串，
+    如：name=admin&pwd=15c556151b6b908d9a835efcee721e9a15a303177bc3fbd375fc2769c6d9bdc7
+然后加盐，进行md5加密。
+ */
+const { setting,tools,creatRes } = require('../utils');
+module.exports =  function(req, res, next) {
+    let _para = req.body;
+    var arr = Object.keys(_para);
+    //参数为空不校验sign
+    if(arr.length<=0){
+        return next();
+    }
+    let s1 = _para.sign;
+    if(!s1){
+        res.json(creatRes("fail",'',"请求失败，需要签名！"))
+    }
+    arr = arr.sort();
+    let str = '';
+    for(let i in arr){
+        let v = arr[i];
+        if(v!="sign"){
+            if(str==''){
+                str += v+'='+_para[v];
+            }else{
+                str += "&"+v+'='+_para[v];
+            }
+        }
+    }
+    let s2 = tools.md5(str+setting.SECERT);
+    if(s1==s2){
+        return next();    
+    }
+    res.json(creatRes("fail",'',"签名错误"));
+}

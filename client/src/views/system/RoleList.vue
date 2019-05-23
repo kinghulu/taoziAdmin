@@ -7,17 +7,24 @@
         <div class="course_box">
             <el-table :data="roleData" border style="width: 100%;" v-loading="listloading">
                 <el-table-column prop="name" label="角色" align="center"  />
+                <el-table-column prop="creator" label="创建人" align="center" width="140" />
                 <el-table-column prop="create_time" label="创建时间" align="center" width="180" />
-                <el-table-column prop="update_time" label="最后更新时间" align="center" width="180" />
                 <el-table-column prop="roleviews" label="权限一览" align="center" />
-                <el-table-column label="操作" align="center" width="250">
+                <el-table-column label="启用禁用" align="center" width="120" v-if="hasEditRole">
                     <template slot-scope="scope">
-                        <el-button size="mini" :type="scope.row.state==1?'primary':'danger'" @click="handleToggle(scope.row)">
-                            <span v-if="scope.row.state==1">已启用</span>
-                            <span v-else>已禁用</span>
-                        </el-button>
-                        <el-button size="mini" type="warning" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button size="mini" @click="handleCopy(scope.row)">复制</el-button>
+                        <el-tooltip :content="scope.row.state==1?'当前已启用':'当前已禁用'" placement="top">
+                            <el-switch
+                                v-model="scope.row.state1"
+                                :active-value="1" active-color="#67C23A"
+                                :inactive-value="0" @change='handleToggle(scope.row)'>
+                            </el-switch>
+                        </el-tooltip>    
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" align="center" width="160" fixed="right" v-if="hasEditRole">
+                    <template slot-scope="scope">
+                        <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button size="mini" type="danger" @click="handleDel(scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -31,6 +38,7 @@
         data() {
             return {
                 loading:true,
+                hasEditRole:false,
                 listloading:false,
                 roleData: []
             }
@@ -40,15 +48,17 @@
                 this.$router.push({name:"RoleAdd"});
             },
             getRoleList(){
+                this.roleData = [];
                 this.listloading = true;
                 this.$ajax({
                     method: 'post',
-                    url:  'resource/role/rolelist'
+                    url:  '/admin/role/list'
                 }).then( (res)=> {
                     this.listloading = false;
                     let roles = res;
                     for(let i in roles){
-                        let rolestr = roles[i].auth;
+                        let rolestr = roles[i].rules;
+                        roles[i].state1 = roles[i].state;
                         let autharr = rolestr.split(",");
                         let roleviews = '';
                         for(let j in autharr){
@@ -61,7 +71,6 @@
                         }
                         roles[i].roleviews = roleviews;
                     }
-                    
                     this.roleData = roles;
                 }).catch( (res)=> {
                     this.listloading = false;
@@ -85,14 +94,18 @@
             },
             //启用禁用
             handleToggle(rd){
-                this.listloading = true;
                 let resultstate = rd.state==1?0:1;
+                this.handleState(rd.id,resultstate);
+            },
+            //更改状态
+            handleState(id,state){
+                this.listloading = true;
                 this.$ajax({
                     method: 'post',
-                    url:  'resource/role/rolesavestate',
+                    url:  '/admin/role/changestate',
                     data:this.qs.stringify({
-                        role_id:rd.id,
-                        state:resultstate,
+                        id:id,
+                        state:state,
                     })
                 }).then( (res)=> {
                     this.listloading = false;
@@ -103,18 +116,28 @@
             },
             handleEdit(rd){
                 let r_id = rd.id;
-                this.$router.push({name:"RoleEdit",params:{id:r_id,type:"edit"}});
+                this.$router.push({name:"RoleEdit",params:{id:r_id}});
             },
-            handleCopy(rd){
-                let r_id = rd.id;
-                this.$router.push({name:"RoleEdit",params:{id:r_id,type:"copy"}});
-            },
+            //删除
+            handleDel(rd){
+                this.$confirm('确定删除该权限吗', '提示', {
+                    confirmButtonText: '确定删除',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let r_id = rd.id;
+                    this.handleState(r_id,-1);
+                    this.$message({type: 'success',message: '删除成功!'});
+                }).catch(() => {});
+                
+            }
         },
         watch: {
             
         },
         mounted() {
-            if(!this.isHasAuth("g")){
+            this.hasEditRole = this.isHasAuth("ab2");
+            if(!this.isHasAuth("ab")){
                 this.$router.replace({name: 'P403'});
             };
             this.getRoleList();

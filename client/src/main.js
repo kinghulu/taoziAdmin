@@ -24,7 +24,7 @@ Vue.prototype.qs = qs;
 
 
 Vue.prototype.$ajax = axios;
-//axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 //接口地址
@@ -103,9 +103,9 @@ router.beforeEach((to, from, next) => {
             //判断是否被更改            
             let u_obj = JSON.parse(user);
             axios.defaults.headers.common['Authorization'] = u_obj.token;
-            let tmpkey =  md5(u_obj.name+u_obj.avatar+"taoziadmin");
+            let tmpkey =  md5(u_obj.name+u_obj.role+"taoziadmin");
             if(u_obj.localkey == tmpkey){
-                next();            
+                next();
             }else{
                 next({ path: '/login' });
             }

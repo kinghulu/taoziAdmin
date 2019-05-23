@@ -5,23 +5,20 @@
         </div>
         <div class="course_box">
             <el-form ref="addform" :model="adduser" :rules="rules" label-width="180px" label-position="right">
-                <el-form-item label="用户姓名" prop="real_name">
+                <el-form-item label="昵称" prop="nickname">
                     <el-col :span="11">
-                        <el-input v-model="adduser.real_name" /> 
+                        <el-input v-model="adduser.nickname" /> 
                     </el-col>
                 </el-form-item>
-                <el-form-item label="用户账号" prop="user_name">
+                <el-form-item label="登录名" prop="name">
                     <el-col :span="11">
-                        <el-input v-model="adduser.user_name" />
+                        <el-input v-model="adduser.name" />
                     </el-col>
                 </el-form-item>
-                <el-form-item label="用户密码" prop="user_pwd">
+                <el-form-item label="密码" prop="pwd">
                     <el-col :span="11">
-                        <el-input v-model="adduser.user_pwd"  show-password />
+                        <el-input v-model="adduser.pwd"  show-password />
                     </el-col>
-                    <el-tooltip class="item" effect="dark" content="8-20个字符，最少拥有大写字母/小写字母/数字中的两项" placement="right" style="margin-left:10px;">
-                        <el-button type="text" width="50"><i class="el-icon-info"></i></el-button>
-                    </el-tooltip>
                 </el-form-item>
                 <el-form-item label="权限角色" prop="role_id">
                     <el-select v-model='adduser.role_id' placeholder="请选择权限角色">
@@ -42,20 +39,6 @@
 <script>
     export default {
         data() {
-            //用户密码限制在8-20个字符，英文与数字的组合，区分大小写，最少拥有大写字母/小写字母/数字中的两项；
-            const checkPwd = (rule, value, callback) => {
-                if (!value) {
-                    callback(new Error('请输入密码'))
-                } else if (value.length<8 || value.length>20) {
-                    callback(new Error('长度在 8 到 20 个字符'));
-                }else {
-                    if(this.checkPassFormat(value)){
-                        callback()
-                    }else{
-                        callback(new Error('最少拥有大写字母/小写字母/数字中的两项'));
-                    }
-                }
-            }
             const checkuname = (rule, value, callback) => {
                 if (!value) {
                     callback(new Error('请输入用户名'))
@@ -71,23 +54,23 @@
             return {
                 loading:false,
                 adduser:{
-                    user_name:"",
-                    user_pwd:"",
-                    real_name:"",
+                    nickname:"",
+                    pwd:"",
+                    name:"",
                     role_id:""
                 },
                 rules: {
-                    real_name:[
-                        { required: true, message: '请输入用户姓名', trigger: 'blur' },
+                    nickname:[
+                        { required: true, message: '请输入昵称', trigger: 'blur' },
                         {  max: 12, message: '长度不超过 12 个字符', trigger: 'blur' }
                     ],
-                    user_name: [
-                        { required: true, message: '请输入用户账号', trigger: 'change' },
+                    name: [
+                        { required: true, message: '请输入登录名', trigger: 'change' },
                         { validator: checkuname, trigger: 'change' }
                     ],
-                    user_pwd: [
+                    pwd: [
                         { required: true, message: '请输入密码', trigger: 'change' },
-                        { validator: checkPwd, trigger: 'change' }
+                        { min:6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
                     ],
                     role_id: [
                         { required: true, message: '请选择用户角色', trigger: 'change' }
@@ -104,7 +87,7 @@
             getRoleList(){
                 this.$ajax({
                     method: 'post',
-                    url:  'resource/member/userrolelist'
+                    url:  '/admin/role/list'
                 }).then( (res)=> {
                     this.rolelist = res;
                 })
@@ -116,18 +99,18 @@
                         this.loading = true;
                         this.$ajax({
                             method: 'post',
-                            url:  'resource/member/useradd',
+                            url:  '/admin/user/add',
                             data: this.qs.stringify(
                                 {
-                                    user_name:this.adduser.user_name,
-                                    user_pwd:this.md5(this.adduser.user_pwd),
-                                    real_name:this.adduser.real_name,
+                                    name:this.adduser.name,
+                                    pwd:this.md5(this.SECERT + this.adduser.pwd),
+                                    nickname:this.adduser.nickname,
                                     role_id:this.adduser.role_id
                                 }
                             )
                         }).then( (res)=> {
                             this.loading = false;
-                            this.$notify({title: '成功', message: '添加用户'+this.adduser.real_name+'成功!',type: 'success'});
+                            this.$notify({title: '成功', message: '添加用户'+this.adduser.nickname+'成功!',type: 'success'});
                             this.$router.replace({name: 'UserList'});
                         }).catch( (res)=> {
                             this.loading = false;
@@ -148,7 +131,7 @@
             
         },
         mounted() {
-            if(!this.isHasAuth("g")){
+            if(!this.isHasAuth("aa")){
                 this.$router.replace({name: 'P403'});
             };
             this.getRoleList();

@@ -17,29 +17,34 @@
  *  ...:::           ::::::::::::'              ``::.
  * ```` ':.          ':::::::::'                  ::::..
  *                    '.:::::'                    ':'````..
- * --------------- 接口
- * ---------------- by taozi 578999047@qq.com
- * ----------------- 20190515
+ * --------------- upup 后台权限Schema
+ * ---------------- by 578999047@qq.com
+ * ----------------- 20190521
  * ヽ｀、ヽ｀｀、ヽ｀ヽ｀、、ヽ ｀ヽ 、ヽ｀🌙｀ヽヽ｀ヽ、ヽ｀ヽ｀、ヽ｀｀、ヽ 
  * 、｀｀、 ｀、ヽ｀ 、、ヽ｀｀、ヽ、｀｀、、ヽ｀｀、 、ヽヽ｀、｀、、ヽヽ、｀｀
  * 、 、 ヽ｀、ヽ｀｀、ヽ｀ヽ｀、、ヽ ｀ヽ 、ヽ｀｀ヽ、💃｀ヽ🏃、、🚶｀🚶🚶ヽ｀、
 ***************************************************************************************/
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var moment = require('moment');
+//mongoose.set('useFindAndModify', false);
 
-var express = require('express');
-var router = express.Router();
-const {
-    ApiControl,
-} = require('../lib/controller');
+var AdminRoleSchema = new Schema({
+    name: String, //权限名
+    state:{ type: Number, default: 1 }, // 角色状态 -1：删除，1：正常，0：禁用
+    creator:String,//创建者
+    creator_id:String, //创建者id
+    rules:String,  //权限列表字符串
+    create_time:{ type: String, default: moment().format("YYYY-MM-DD HH:mm:ss") },//创建时间
+});
 
-const { setting,checkSign } = require('../utils');
+AdminRoleSchema.set('toJSON', { getters: true, virtuals: true });
+AdminRoleSchema.set('toObject', { getters: true, virtuals: true });
 
-//校验sign签名
-router.use(checkSign);
+// UserSchema.path('date').get(function (v) {
+//     return moment(v).format("YYYY-MM-DD HH:mm:ss");
+// });
 
-/**
-* 获取服务器时间
-*/
-router.post('/time', ApiControl.getTime);
+var AdminRole = mongoose.model("AdminRole", AdminRoleSchema);
 
-
-module.exports = router;
+module.exports = AdminRole;
