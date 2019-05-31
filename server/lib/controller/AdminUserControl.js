@@ -1,6 +1,5 @@
 
-const AdminUserModel = require("../models").AdminUser;
-const AdminRoleModel = require("../models").AdminRole;
+const {AdminUserModel,AdminRoleModel} = require("../models");
 const {
     setting,tools,creatRes
 } = require('../../utils');
@@ -25,7 +24,6 @@ class AdminUserControl {
         }
         try{
             const user =await AdminUserModel.findOne(userObj).populate({ path: 'roleid', select: 'rules' });
-            console.log(user)
             if (user) {
                 //判断是否禁用
                 if(user.state==1){

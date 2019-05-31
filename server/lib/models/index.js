@@ -29,5 +29,5 @@ db.on('close', function () {
 });
 
 
-exports.AdminUser = require('./AdminUser');
-exports.AdminRole = require('./AdminRole');
+exports.AdminUserModel = require('./AdminUser');
+exports.AdminRoleModel = require('./AdminRole');
