@@ -49,7 +49,7 @@ app.use(session({
   saveUninitialized: false,  // 是否自动保存未初始化的会话，建议false
   resave: false,  // 是否每次都重新保存会话，建议false
   cookie: {
-      maxAge: 8 * 3600 * 1000  // 单位是毫秒,有效期 8 小时 
+      maxAge: 4 * 3600 * 1000  // 单位是毫秒,有效期 4 小时 
   },
   store: new MongoStore({
       db: "session",

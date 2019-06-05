@@ -30,7 +30,7 @@ class AdminUserControl {
                     await AdminUserModel.findOneAndUpdate(userObj, { $set: {"last_login_time":moment().format("YYYY-MM-DD HH:mm:ss")}})
                     let nickname = user.nickname?user.nickname:user.name;
                     //有效期24小时
-                    let _token = jwt.sign({user:{name:nickname,id:user.id},exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)}, setting.encrypt_key);
+                    let _token = jwt.sign({user:{name:nickname,id:user.id},exp: Math.floor(Date.now() / 1000) + (60 * 60 * 4)}, setting.encrypt_key);
                     req.session.uid = tools.md5(setting.SECERT+user.id);
                     let _rules = "";
                     if(user.roleid){
